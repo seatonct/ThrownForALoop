@@ -77,7 +77,8 @@ while (choice != "0")
                         0. Exit
                         1. View All Products
                         2. View Product Details
-                        3. View Latest Products");
+                        3. View Latest Products
+                        4. Purchase Product");
     choice = Console.ReadLine();
     if (choice == "0")
     {
@@ -95,6 +96,11 @@ while (choice != "0")
     {
         ViewLatestProducts();
     }
+    else if (choice == "4")
+    {
+        PurchaseProduct();
+    }
+    
 }
 
 
@@ -184,4 +190,36 @@ void ViewLatestProducts()
     {
         Console.WriteLine($"{i + 1}. {latestProducts[i].Name}");
     }
+}
+
+void PurchaseProduct()
+{
+    Console.WriteLine("Enter the number of the product you would like to purchase:");
+    for (int i = 0; i < products.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {products[i].Name}");
+    }
+    int response = 0;
+    Product purchasedProduct = null;
+    try
+        {
+            response = int.Parse(Console.ReadLine().Trim());
+            purchasedProduct = products[response - 1];
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Please type only integers!");
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Console.WriteLine("Please choose an existing item only!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            Console.WriteLine("Do better!");
+        }
+    
+    Console.WriteLine($"Enjoy your {purchasedProduct.Name}!");
+    products.RemoveAt(response - 1);
 }
